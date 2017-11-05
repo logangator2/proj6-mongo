@@ -33,7 +33,6 @@ from pymongo import MongoClient
 import config
 CONFIG = config.configuration()
 
-
 MONGO_CLIENT_URL = "mongodb://{}:{}@{}:{}/{}".format(
     CONFIG.DB_USER,
     CONFIG.DB_USER_PW,
@@ -41,9 +40,7 @@ MONGO_CLIENT_URL = "mongodb://{}:{}@{}:{}/{}".format(
     CONFIG.DB_PORT, 
     CONFIG.DB)
 
-
 print("Using URL '{}'".format(MONGO_CLIENT_URL))
-
 
 ###
 # Globals
@@ -65,8 +62,6 @@ except:
     print("Failure opening database.  Is Mongo running? Correct password?")
     sys.exit(1)
 
-
-
 ###
 # Pages
 ###
@@ -80,12 +75,13 @@ def index():
       app.logger.debug("Memo: " + str(memo))
   return flask.render_template('index.html')
 
-
-# We don't have an interface for creating memos yet
-# @app.route("/create")
-# def create():
-#     app.logger.debug("Create")
-#     return flask.render_template('create.html')
+"""
+# Make an interface for creating memos
+@app.route("/create")
+def create():
+    app.logger.debug("Create")
+    return flask.render_template('create.html')
+    """
 
 
 @app.errorhandler(404)
@@ -100,7 +96,6 @@ def page_not_found(error):
 # Functions used within the templates
 #
 #################
-
 
 @app.template_filter( 'humanize' )
 def humanize_arrow_date( date ):
@@ -123,7 +118,6 @@ def humanize_arrow_date( date ):
         human = date
     return human
 
-
 #############
 #
 # Functions available to the page code above
@@ -141,10 +135,7 @@ def get_memos():
         records.append(record)
     return records 
 
-
 if __name__ == "__main__":
     app.debug=CONFIG.DEBUG
     app.logger.setLevel(logging.DEBUG)
     app.run(port=CONFIG.PORT,host="0.0.0.0")
-
-    
