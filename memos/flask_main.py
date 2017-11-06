@@ -75,14 +75,11 @@ def index():
       app.logger.debug("Memo: " + str(memo))
   return flask.render_template('index.html')
 
-"""
 # Make an interface for creating memos
 @app.route("/create")
 def create():
     app.logger.debug("Create")
     return flask.render_template('create.html')
-    """
-
 
 @app.errorhandler(404)
 def page_not_found(error):

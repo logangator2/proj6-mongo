@@ -5,6 +5,10 @@ Simple list of dated memos kept in MongoDB database
 -Name: Maxwell Logan
 -Email: mlogan@uoregon.edu
 
+# Credits
+
+-I used https://www.w3schools.com/html/html_examples.asp for designing the basic memo UI
+
 ## Description
 
 A simple Flask app that displays all the dated memos it finds in a MongoDB database.
