@@ -120,6 +120,33 @@ def humanize_arrow_date( date ):
 # Functions available to the page code above
 #
 ##############
+
+def delete_memo(memo):
+  """
+  Args:
+    memo: text of the memo the user wants to erase
+  Returns:
+    Calls get-memos for updated records
+  """
+  bad_record = collection.find( { "text" : memo } ) # CHECK: In theory this should work
+  collection.remove(bad_record) # CHECK: In theory this should work
+  return get_memos()
+
+def add_memo(memo, date):
+  """
+  Args:
+    memo: text for the new memo
+    date: date of memo
+  Returns:
+    Calls get_memos for updated records
+  """
+  record = { "type": "dated_memo", 
+           "date":  arrow.utcnow().naive, # FIXME: make an arrow object of the given date
+           "text": memo
+          }
+  collection.insert(record)
+  return get_memos()
+
 def get_memos():
     """
     Returns all memos in the database, in a form that
