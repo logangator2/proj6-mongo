@@ -18,6 +18,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 
+import random
 import json
 import logging
 
@@ -49,7 +50,7 @@ print("Using URL '{}'".format(MONGO_CLIENT_URL))
 
 app = flask.Flask(__name__)
 app.secret_key = CONFIG.SECRET_KEY
-global tokencounter
+tokencounter = 0
 
 ####
 # Database connection per server process
@@ -125,12 +126,10 @@ def delete_memo(token):
   Returns:
     Calls get-memos for updated records
   """
-  #bad_record = collection.find( { "token" : token } )
-  #logging.info(bad_record)
-  collection.delete_one({ "token" : token }) # currently in form of cursor, need in form of {"token": token}
+  collection.delete_one({ "token" : token })
   return index()
 
-@app.route("/add")
+@app.route("/add/<memo>/<date>")
 def add_memo(memo, date):
   """
   Args:
@@ -139,7 +138,7 @@ def add_memo(memo, date):
   Returns:
     Calls get_memos for updated records
   """
-  tokencounter += 1
+  tokencounter = random.randint(1, 100)
   record = { "type": "dated_memo", 
            "date":  arrow.utcnow().naive, # FIXME: make an arrow object of the given date
            "text": memo,

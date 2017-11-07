@@ -25,16 +25,18 @@
 Date:
 <form id="date" method="POST">
     <input type="text" name="Calendar"/>
+    <input type="hidden" id="Cal">
     <br>
 </form>
 
 Enter Memo Here:
 <form id="entry" method="POST">
     <input type="text" name="Memo"/>
+    <input type="hidden" id="Mem">
     <br>
 </form>
 
-<form action="/add">
+<form action="/add/Mem/Cal">
   <br>
   <input type="submit" value="Save">
 </form>
