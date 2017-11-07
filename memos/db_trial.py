@@ -42,7 +42,8 @@ except Exception as err:
 
 record = { "type": "dated_memo", 
            "date":  arrow.utcnow().naive,
-           "text": "This is a sample memo"
+           "text": "This is a sample memo",
+           "token": "sampletoken1"
           }
 
 print("Inserting 1")
@@ -51,7 +52,8 @@ print("Inserted")
 
 record = { "type": "dated_memo", 
            "date":  arrow.utcnow().replace(days=+1).naive,
-           "text": "Sample one day later"
+           "text": "Sample one day later",
+           "token": "sampletoken2"
           }
 
 print("Inserting 2")

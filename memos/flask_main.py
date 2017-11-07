@@ -28,6 +28,7 @@ import arrow
 from dateutil import tz  # For interpreting local times
 
 # Mongo database
+import pymongo
 from pymongo import MongoClient
 
 import config
@@ -48,6 +49,7 @@ print("Using URL '{}'".format(MONGO_CLIENT_URL))
 
 app = flask.Flask(__name__)
 app.secret_key = CONFIG.SECRET_KEY
+global tokencounter
 
 ####
 # Database connection per server process
@@ -115,23 +117,20 @@ def humanize_arrow_date( date ):
         human = date
     return human
 
-#############
-#
-# Functions available to the page code above
-#
-##############
-
-def delete_memo(memo):
+@app.route("/delete/<token>", methods=['POST'])
+def delete_memo(token):
   """
   Args:
     memo: text of the memo the user wants to erase
   Returns:
     Calls get-memos for updated records
   """
-  bad_record = collection.find( { "text" : memo } ) # CHECK: In theory this should work
-  collection.remove(bad_record) # CHECK: In theory this should work
-  return get_memos()
+  #bad_record = collection.find( { "token" : token } )
+  #logging.info(bad_record)
+  collection.delete_one({ "token" : token }) # currently in form of cursor, need in form of {"token": token}
+  return index()
 
+@app.route("/add")
 def add_memo(memo, date):
   """
   Args:
@@ -140,12 +139,20 @@ def add_memo(memo, date):
   Returns:
     Calls get_memos for updated records
   """
+  tokencounter += 1
   record = { "type": "dated_memo", 
            "date":  arrow.utcnow().naive, # FIXME: make an arrow object of the given date
-           "text": memo
+           "text": memo,
+           "token": "sampletoken{}".format(tokencounter)
           }
   collection.insert(record)
-  return get_memos()
+  return index()
+
+#############
+#
+# Functions available to the page code above
+#
+##############
 
 def get_memos():
     """

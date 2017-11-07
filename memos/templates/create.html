@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html><head>
-	
+
   <!-- 'viewport' is used by bootstrap to respond to device size -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,14 +22,19 @@
 </head>
 <body>
 
-<h1>Enter Text Here:</h1>
+Date:
+<form id="date" method="POST">
+    <input type="text" name="Calendar"/>
+    <br>
+</form>
 
+Enter Memo Here:
 <form id="entry" method="POST">
     <input type="text" name="Memo"/>
     <br>
 </form>
 
-<form action="/index">
+<form action="/add">
   <br>
   <input type="submit" value="Save">
 </form>
